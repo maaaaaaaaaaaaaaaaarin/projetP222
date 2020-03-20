@@ -2,6 +2,9 @@ package p222.tp3.projet222;
 
 class TypeFichier {
 
+    // Class might be redundant because of `File`
+    // TODO review if TypeFichier` can be replaced by `File`
+
     private String nom;
     private String nom_crypt;
     private String path;

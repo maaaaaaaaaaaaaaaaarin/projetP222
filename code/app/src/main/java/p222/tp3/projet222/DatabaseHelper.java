@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.io.File;
 import java.util.Date;
 
 
@@ -142,6 +144,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 return false;
             }
             return true;
+        }
+
+        public boolean delFichier(int user_id, int fichier_id) {
+            boolean retVal = false;
+            String getStatement = "SELECT PATH FROM "+NOM_TABLE_IMAGES
+                                + "WHERE "+ID+" = " +fichier_id
+                                + "AND " +ID_USER+" = "+user_id+";";
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor data = db.rawQuery(getStatement, new String[0]);
+            if (data != null) {
+                // Path = data.getString(0);
+                File fichier = new File(data.getString(0));
+                retVal = fichier.delete(); // renvoie true si le fichier a été supprimé
+            }
+            return retVal;
         }
 
         private ContentValues fillFields(ContentValues cv, TypeFichier f) {

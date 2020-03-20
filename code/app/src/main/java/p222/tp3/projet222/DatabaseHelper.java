@@ -123,6 +123,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     rVal = c;
                 }
             }
+            return rVal;
+        }
+
+        public boolean coupleExists(Object key) {
+            return !(getCoupleByKey(key) == null);
         }
 
         public boolean addFichier(TypeFichier f) {
@@ -157,9 +162,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return cv;
         }
 
-        public Cursor getData() {
+        public Cursor getData(String tableName) {
             SQLiteDatabase db = this.getWritableDatabase();
-            String query = "SELECT * FROM "+NOM_TABLE;
+            if (!coupleExists(tableName)) return null;
+
+            String query = "SELECT * FROM "+tableName;
             Cursor data = db.rawQuery(query, new String[0]);
             return data;
         }
